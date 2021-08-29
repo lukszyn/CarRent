@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CarRent.Models.Rental>
+
+@{
+    ViewData["Title"] = "All Rentals";
+}
+
+<h1>All Rentals</h1>
+
+<a asp-action="Register" asp-controller="Account"
+   class="btn btn-primary mb-3" style="width:auto">
+    Add new rental
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfRental)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfReturn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isPaid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Car.Brand) @Html.DisplayFor(modelItem => item.Car.Model)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfRental)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfReturn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Payment) $
+                </td>
+                <td>
+                    @if (item.isPaid)
+                    {
+                        <i class="fa fa-check-circle text-success text-center"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times text-warning text-center"></i>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-primary mr-2" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-warning" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

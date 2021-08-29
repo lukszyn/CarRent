@@ -1,0 +1,80 @@
+﻿@model CarRent.ViewModels.UserRentalsViewModel
+
+@{
+    ViewData["Title"] = "All Rentals";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@if(Model.IsValid == false)
+{
+    <warning content="Something went wrong"></warning>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date of rental
+            </th>
+            <th>
+                Date of return
+            </th>
+            <th>
+                Payment
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                Car
+            </th>
+            <th>
+                Is Paid
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Rentals)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfRental)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfReturn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Payment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Brand) @Html.DisplayFor(modelItem => item.Car.Model)
+            </td>
+            <td>
+                @if (item.isPaid)
+                {
+                    <i class="fa fa-check-circle text-success text-center"></i>
+                }
+                else
+                {
+                    <i class="fa fa-times text-warning text-center"></i>
+                }
+            </td>
+            <td>
+                <a class="btn btn-success mr-2" asp-action="Pay" asp-route-id="@item.Id">Pay</a>
+                <a class="btn btn-info mr-2" asp-action="Return" asp-route-id="@item.Id">Return</a>
+                <a class="btn btn-primary mr-2" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-warning" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

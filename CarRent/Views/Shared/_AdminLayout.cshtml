@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+
+    <nav class="bg-dark">
+
+        <div class="logo">
+            <img src="https://randomuser.me/api/portraits/men/78.jpg">
+             <a class="nav-link text-white" href="#">Hello @UserManager.GetUserName(User)!</a>
+        </div>
+
+        <ul>
+            <li>
+                <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Cars", "Index", "Cars", new { IsRented = false }, new { @class = "nav-link text-white" })
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Manage
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" asp-controller="Rentals" asp-action="AllRentals">Rentals</a>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListUsers">Users</a>
+                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListRoles">Roles</a>
+                </div>
+            </li>
+
+            <div class="d-flex justify-content-center" style="height: 100px">
+                <form class="form-inline" asp-controller="account" asp-action="logout">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            </div>
+        </ul>
+    </nav>
+
+    <button id="toggle" class="toggle bg-primary">
+        <i class="fa fa-bars fa-2x"></i>
+    </button>
+
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh">
+        <div class="mt-5 p-2 col-6">@RenderBody()</div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

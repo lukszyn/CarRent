@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@model CarRent.ViewModels.CarsViewModel
+
+<h1>@ViewBag.Title</h1>
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Create new", "New", "Cars")
+}
+
+@if (@Model.IsRented == true)
+{
+    <warning content="You cannot rent this car!"></warning>
+}
+
+<div class="row mt-4">
+    @foreach (var car in @Model.Cars)
+    {
+        <div class="col-sm-4 mb-3">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@("~/images/" + car.ImageName)" asp-append-version="true">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        @car.Brand @car.Model
+                        @if (car.isAvailable)
+                        {<span class="badge badge-success">Available</span>}
+                        else
+                        {<span class="badge badge-danger">Rented</span>}
+                    </h4>
+
+                    <p class="text-primary">Year of production: <span class="text-secondary text-light">@car.Year</span></p>
+                    <p class="text-primary">Licence Plate: <span class="text-secondary text-light">@car.LicensePlate</span></p>
+                    <p class="text-primary">Mileage: <span class="text-secondary text-light">@car.Mileage km</span></p>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <a asp-controller="Rentals" asp-action="New" asp-route-id="@car.Id">
+                                <button type="button" class="btn btn-primary mt-3 mr-2">Rent</button>
+                            </a>
+                            <a asp-controller="Cars" asp-action="Edit" asp-route-id="@car.Id">
+                                <button type="button" class="btn btn-success mt-3 mr-2">Edit</button>
+                            </a>
+                            <a asp-controller="Cars" asp-action="Delete" asp-route-id="@car.Id">
+                                <button type="button" class="btn btn-warning mt-3 mr-2">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background-image: url('../images/background.jpg');
+        height: 100vh;
+        width: 100vw;
+        z-index: 1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .wrapper {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+</style>
+
+<div class="bg-image">
+
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="text-center text-white">
+                <h1 class="display-4 font-weight-bold" style="text-shadow: 1px 1px 10px #555">Rent a car - fast and cheap</h1>
+                <h3 class="font-weight-light">
+                    Sign up and rent one of our cars
+                </h3>
+                <div class="row justify-content-center mt-5">
+                    @Html.ActionLink("Sign in", "Login", "Account", null, new { @class = "btn btn-primary btn-lg mr-2" })
+                    @Html.ActionLink("Find out more", "Details", "Home", null, new { @class = "btn btn-primary btn-lg mr-2" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
